@@ -27,6 +27,6 @@
 @property (readwrite, nonatomic) CGPoint velocity;
 
 +(id) bullet;
--(void) shootBulletFromShip:(Ship*)ship;
+-(void) shootBulletFromShip:(CGPoint)startPosition velocity:(CGPoint)vel frameName:(NSString*)framename;
 
 @end

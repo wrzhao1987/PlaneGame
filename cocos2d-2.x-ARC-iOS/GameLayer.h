@@ -17,6 +17,7 @@
 #import "cocos2d.h"
 
 @class Ship;
+@class BulletCache;
 
 typedef enum
 {
@@ -29,7 +30,6 @@ typedef enum
 {
 	GameSceneNodeTagBullet = 1,
     GameSceneNodeTagBulletCache,
-	GameSceneNodeTagBulletSpriteBatch,
     GameSceneNodeTagShip,
 	
 } GameSceneNodeTags;
@@ -39,9 +39,11 @@ typedef enum
     NSUInteger nextInactiveBullet;
 }
 
+@property (readonly) Ship* defaultShip;
+@property (readonly) BulletCache* bulletCache;
+@property (readonly) CGRect screenRect;
+
 +(id) scene;
 +(GameLayer*) sharedGameLayer;
--(CCSpriteBatchNode*) bulletSpriteBatch;
--(void) shootBulletFromShip:(Ship*)ship;
 -(Ship*) defaultShip;
 @end

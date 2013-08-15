@@ -27,6 +27,8 @@
 @implementation GameLayer
 
 static GameLayer* sharedGameLayer;
+static CGRect screenRect;
+
 +(GameLayer*) sharedGameLayer
 {
 	NSAssert(sharedGameLayer != nil, @"GameScene instance not yet initialized!");
@@ -46,14 +48,21 @@ static GameLayer* sharedGameLayer;
 	return scene;
 }
 
+-(CGRect) screenRect
+{
+    if (CGRectIsEmpty(screenRect))
+    {
+        CGSize screenSize = [CCDirector sharedDirector].winSize;
+        screenRect = CGRectMake(0, 0, screenSize.width, screenSize.height);
+    }
+    return screenRect;
+}
+
 -(id) init
 {
 	if ((self = [super init]))
 	{
 		sharedGameLayer = self;
-		
-        // if the background shines through we want to be able to see it!
-        glClearColor(1, 1, 1, 1);
         
 		// Load all of the game's artwork up front.
 		CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
@@ -81,18 +90,6 @@ static GameLayer* sharedGameLayer;
 	sharedGameLayer = nil;
 }
 
--(void) countBullets:(ccTime)delta
-{
-	CCLOG(@"Number of active Bullets: %i", self.bulletSpriteBatch.children.count);
-}
-
--(CCSpriteBatchNode*) bulletSpriteBatch
-{
-	CCNode* node = [self getChildByTag:GameSceneNodeTagBulletSpriteBatch];
-	NSAssert([node isKindOfClass:[CCSpriteBatchNode class]], @"not a CCSpriteBatchNode");
-	return (CCSpriteBatchNode*)node;
-}
-
 -(BulletCache*) bulletCache
 {
     CCNode* node = [self getChildByTag:GameSceneNodeTagBulletCache];
@@ -100,22 +97,6 @@ static GameLayer* sharedGameLayer;
     return (BulletCache*) node;
 }
 
--(void) shootBulletFromShip:(Ship*)ship
-{
-	CCArray* bullets = [self.bulletSpriteBatch children];
-	
-	CCNode* node = [bullets objectAtIndex:nextInactiveBullet];
-	NSAssert([node isKindOfClass:[Bullet class]], @"not a bullet!");
-	
-	Bullet* bullet = (Bullet*)node;
-	[bullet shootBulletFromShip:ship];
-	
-	nextInactiveBullet++;
-	if (nextInactiveBullet >= bullets.count)
-	{
-		nextInactiveBullet = 0;
-	}
-}
 
 - (Ship*) defaultShip
 {

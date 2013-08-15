@@ -7,6 +7,7 @@
 //
 
 #import "InputLayer.h"
+#import "BulletCache.h"
 
 
 @implementation InputLayer
@@ -70,12 +71,18 @@
     totalTime += delta;
     
     GameLayer *game = [GameLayer sharedGameLayer];
-    Ship *ship = [game defaultShip];
+    Ship* ship = game.defaultShip;
+    BulletCache* bulletCache = game.bulletCache;
     
-    if (fireButton.active &&  totalTime > nextShotTime)
+    if (fireButton.active && totalTime > nextShotTime)
     {
-        nextShotTime = totalTime + 0.5f;
-        [game shootBulletFromShip:ship];
+        nextShotTime = totalTime + 0.4f;
+        
+        // Set the position, velocity and spriteFrame before shooting
+        CGPoint shotPos = CGPointMake(ship.position.x + 45, ship.position.y - 19);
+        float spread = (CCRANDOM_0_1() - 0.5f)* 0.5f;
+        CGPoint velocity = CGPointMake(200, spread * 50);
+        [bulletCache shootBulletFrom:shotPos velocity:velocity frameName:@"bullet.png"];
     }
     
     // Allow faster shooting by quickly tapping the fire button
