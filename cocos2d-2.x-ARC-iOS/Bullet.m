@@ -27,7 +27,7 @@
 
 @implementation Bullet
 
-@synthesize velocity;
+@synthesize velocity, isPlayerBullet;
 
 
 +(id) bullet
@@ -44,12 +44,12 @@
 	return self;
 }
 
-// Re-Uses the bullet
--(void) shootBulletFromShip:(CGPoint)startPosition velocity:(CGPoint)vel frameName:(NSString*)frameName
+-(void) shootBulletFromShip:(CGPoint)startPosition velocity:(CGPoint)vel frameName:(NSString*)frameName isPlayerBullet:(BOOL)playerBullet
 {
     self.velocity = vel;
     self.position = startPosition;
     self.visible = YES;
+    self.isPlayerBullet = playerBullet;
     
     // Change the bullet's texture by setting a different SpriteFrame to be displayed
     CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:frameName];
@@ -74,7 +74,6 @@
 	{
 		self.visible = NO;
 		[self unscheduleUpdate];
-        CCLOG(@"Bullet out of bound.");
 	}
 }
 

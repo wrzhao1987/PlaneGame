@@ -32,20 +32,42 @@
     return self;
 }
 
--(void) shootBulletFrom:(CGPoint)startPosition velocity:(CGPoint)velocity frameName:(NSString *)frameName
+-(void) shootBulletFrom:(CGPoint)startPosition velocity:(CGPoint)velocity frameName:(NSString *)frameName isPlayerBullet:(BOOL)playerBullet
 {
     CCArray* bullets = batch.children;
     CCNode* node = [bullets objectAtIndex:nextInactiveBullet];
     NSAssert([node isKindOfClass:[Bullet class]], @"not a Bullet!");
     
     Bullet* bullet = (Bullet*) node;
-    [bullet shootBulletFromShip:startPosition velocity:velocity frameName:frameName];
+    [bullet shootBulletFromShip:startPosition velocity:velocity frameName:frameName isPlayerBullet:playerBullet];
     
     nextInactiveBullet++;
-    if (nextInactiveBullet > bullets.count)
+    if (nextInactiveBullet >= bullets.count)
     {
         nextInactiveBullet = 0;
     }
 }
 
+-(BOOL) isPlayerBulletCollidingWithRect:(CGRect)rect
+{
+    return [self isBulletCollidingWithRect:rect usePlayerBullets:YES];
+}
+
+-(BOOL) isBulletCollidingWithRect:(CGRect)rect usePlayerBullets:(BOOL)usePlayerBullets
+{
+    BOOL isColliding = NO;
+    
+    for (Bullet* bullet in batch.children) {
+        // 这个判断是要确定这子弹是我们要判断的子弹
+        if (bullet.visible && usePlayerBullets == bullet.isPlayerBullet) {
+            if (CGRectIntersectsRect([bullet boundingBox], rect)) {
+                isColliding = YES;
+                //remove the bullet
+                bullet.visible = NO;
+                break;
+            }
+        }
+    }
+    return isColliding;
+}
 @end

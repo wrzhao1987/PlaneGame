@@ -15,14 +15,10 @@
 
 #import "GameLayer.h"
 #import "Ship.h"
-#import "Bullet.h"
 #import "ParallaxBackground.h"
 #import "InputLayer.h"
 #import "BulletCache.h"
-
-@interface GameLayer (PrivateMethods)
--(void) countBullets:(ccTime)delta;
-@end
+#import "EnemyCache.h"
 
 @implementation GameLayer
 
@@ -78,6 +74,9 @@ static CGRect screenRect;
 		ship.position = CGPointMake(80, screenSize.height / 2);
         ship.tag = GameSceneNodeTagShip;
 		[self addChild:ship z:10];
+        
+        EnemyCache* enemyCache = [EnemyCache node];
+        [self addChild:enemyCache z:1 tag:GameSceneNodeTagEnemyCache];
 		
         BulletCache* bulletCache = [BulletCache node];
         [self addChild:bulletCache z:1 tag:GameSceneNodeTagBulletCache];

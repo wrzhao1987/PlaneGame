@@ -22,11 +22,13 @@
 {
 	CGPoint velocity;
 	float outsideScreen;
+    BOOL isPlayerBullet;
 }
 
 @property (readwrite, nonatomic) CGPoint velocity;
+@property (readwrite, nonatomic) BOOL isPlayerBullet;
 
 +(id) bullet;
--(void) shootBulletFromShip:(CGPoint)startPosition velocity:(CGPoint)vel frameName:(NSString*)framename;
+-(void) shootBulletFromShip:(CGPoint)startPosition velocity:(CGPoint)vel frameName:(NSString*)framename isPlayerBullet:(BOOL)playerBullet;
 
 @end

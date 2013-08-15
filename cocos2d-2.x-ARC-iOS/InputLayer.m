@@ -82,7 +82,7 @@
         CGPoint shotPos = CGPointMake(ship.position.x + 45, ship.position.y - 19);
         float spread = (CCRANDOM_0_1() - 0.5f)* 0.5f;
         CGPoint velocity = CGPointMake(200, spread * 50);
-        [bulletCache shootBulletFrom:shotPos velocity:velocity frameName:@"bullet.png"];
+        [bulletCache shootBulletFrom:shotPos velocity:velocity frameName:@"bullet.png" isPlayerBullet:YES];
     }
     
     // Allow faster shooting by quickly tapping the fire button

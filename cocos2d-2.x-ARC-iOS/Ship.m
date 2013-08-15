@@ -45,9 +45,7 @@
 		CCAnimate* animate = [CCAnimate actionWithAnimation:anim];
 		CCRepeatForever* repeat = [CCRepeatForever actionWithAction:animate];
 		[self runAction:repeat];
-		
-        // call "update" for every frame		
-		[self scheduleUpdate];
+    
 	}
 	return self;
 }
@@ -78,12 +76,6 @@
     }
     // MUST call super with the new position
     [super setPosition:position];
-}
-
--(void) update:(ccTime)delta
-{
-	// Shooting is relayed to the game scene
-//	[[GameLayer sharedGameLayer] shootBulletFromShip:self];
 }
 
 @end

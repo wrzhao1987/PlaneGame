@@ -30,6 +30,7 @@ typedef enum
 {
 	GameSceneNodeTagBullet = 1,
     GameSceneNodeTagBulletCache,
+    GameSceneNodeTagEnemyCache,
     GameSceneNodeTagShip,
 	
 } GameSceneNodeTags;

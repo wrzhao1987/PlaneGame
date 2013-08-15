@@ -14,8 +14,7 @@
     NSUInteger nextInactiveBullet;
 }
 
--(void) shootBulletFrom:(CGPoint)startPosition
-               velocity:(CGPoint)velocity
-              frameName:(NSString*)frameName;
-
+-(void) shootBulletFrom:(CGPoint)startPosition velocity:(CGPoint)velocity frameName:(NSString*)frameName isPlayerBullet:(BOOL)playerBullet;
+-(BOOL) isPlayerBulletCollidingWithRect:(CGRect)rect;
+-(BOOL) isBulletCollidingWithRect:(CGRect)rect usePlayerBullets:(BOOL)usePlayerBullets;
 @end
