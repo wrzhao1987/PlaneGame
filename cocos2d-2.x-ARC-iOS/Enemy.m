@@ -11,6 +11,7 @@
 #import "StandardMoveComponent.h"
 #import "StandardShootComponent.h"
 #import "HealthbarComponent.h"
+#import "SimpleAudioEngine.h"
 
 @implementation Enemy
 
@@ -121,6 +122,28 @@ static NSMutableArray* spawnFrequecy = nil;
     hitPoints--;
     if (hitPoints <= 0) {
         self.visible = NO;
+        // Play a particle effect when the enemy was destroyed
+        CCParticleSystem* system;
+        if (type == EnemyTypeBoss)
+        {
+            system = [CCParticleSystemQuad particleWithFile:@"fx-explosion2.plist"];
+            [[SimpleAudioEngine sharedEngine] playEffect:@"explo1.wav" pitch:1.0f pan:0.0f gain:1.0f];
+        }
+        else
+        {
+            system = [CCParticleSystemQuad particleWithFile:@"fx-explosion.plist"];
+            [[SimpleAudioEngine sharedEngine] playEffect:@"explo2.wav" pitch:1.0f pan:0.0f gain:1.0f];
+        }
+        // Set some parameters that can't be set in Particle Designer
+        system.positionType = kCCPositionTypeFree;
+        system.autoRemoveOnFinish = YES;
+        system.position = self.position;
+        
+        [[GameLayer sharedGameLayer] addChild:system];
+    }
+    else{
+        [[SimpleAudioEngine sharedEngine] playEffect:@"hit1.wav" pitch:1.0f pan:0.0f gain:1.0f];
     }
 }
+
 @end
