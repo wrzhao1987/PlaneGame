@@ -31,7 +31,7 @@
 			NSString* frameName = [NSString stringWithFormat:@"bg%i.png", i];
 			CCSprite* sprite = [CCSprite spriteWithSpriteFrameName:frameName];
 			sprite.anchorPoint = CGPointMake(0, 0.5f);
-			sprite.position = CGPointMake(0, screenSize.height / 2);
+			sprite.position = CGPointMake(100, screenSize.height / 2);
 			[spriteBatch addChild:sprite z:i tag:i];
 		}
         
